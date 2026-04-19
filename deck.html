@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Saurabh Kurjekar — Real Estate Investor</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+        :root {
+            --bg: #f8f7f4;
+            --bg-alt: #f0eee9;
+            --surface: #ffffff;
+            --accent: #8b734a;
+            --accent-light: #c9a96e;
+            --text: #1a1a1a;
+            --text-secondary: #4a4a4a;
+            --text-muted: #7a7a7a;
+            --border: #e0ddd6;
+            --border-light: #ebe8e2;
+            --heading: 'Playfair Display', Georgia, serif;
+            --body: 'Inter', -apple-system, sans-serif;
+        }
+
+        html { scroll-behavior: smooth; scroll-snap-type: y mandatory; }
+        body { font-family: var(--body); background: var(--bg); color: var(--text); line-height: 1.6; overflow-x: hidden; }
+
+        .slide {
+            min-height: 100vh; display: flex; align-items: center; justify-content: center;
+            scroll-snap-align: start; padding: 40px 60px; position: relative; overflow: hidden;
+        }
+        .slide-inner { max-width: 1300px; width: 100%; z-index: 2; position: relative; }
+
+        /* NAV */
+        .nav-dots { position: fixed; right: 30px; top: 50%; transform: translateY(-50%); z-index: 100; display: flex; flex-direction: column; gap: 12px; }
+        .nav-dot { width: 10px; height: 10px; border-radius: 50%; background: var(--border); cursor: pointer; transition: all .3s; border: none; }
+        .nav-dot:hover, .nav-dot.active { background: var(--accent); transform: scale(1.3); }
+
+        /* SLIDE 1 */
+        .slide-cover { background: linear-gradient(135deg, #f8f7f4 0%, #f0eee9 50%, #f5f3ef 100%); }
+        .cover-layout { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: center; }
+        .cover-photo-wrapper { display: flex; justify-content: center; }
+        .cover-photo-frame { position: relative; width: 380px; height: 460px; }
+        .cover-photo-frame::before { content: ''; position: absolute; top: -8px; left: -8px; right: -8px; bottom: -8px; border: 1px solid var(--accent-light); opacity: 0.5; }
+        .cover-photo-frame::after { content: ''; position: absolute; top: 8px; right: -16px; bottom: -16px; left: 8px; border: 1px solid var(--accent-light); opacity: 0.25; }
+        .cover-photo { width: 100%; height: 100%; object-fit: cover; object-position: center top; }
+        .cover-text { padding-left: 20px; }
+        .label { font-family: var(--body); font-size: 13px; font-weight: 600; letter-spacing: 4px; text-transform: uppercase; color: var(--accent); margin-bottom: 16px; }
+        .cover-name { font-family: var(--heading); font-size: 56px; font-weight: 600; line-height: 1.15; color: var(--text); margin-bottom: 12px; }
+        .divider { width: 60px; height: 1px; background: var(--accent-light); margin: 20px 0; }
+        .cover-tagline { font-size: 18px; font-weight: 300; color: var(--text-secondary); line-height: 1.7; margin-bottom: 32px; }
+        .cover-stats { display: flex; gap: 40px; }
+        .cover-stat-number { font-family: var(--heading); font-size: 38px; font-weight: 600; color: var(--accent); }
+        .cover-stat-label { font-size: 12px; font-weight: 500; letter-spacing: 1.5px; text-transform: uppercase; color: var(--text-muted); margin-top: 4px; }
+
+        /* SECTIONS */
+        .section-header { margin-bottom: 36px; }
+        .section-number { font-family: var(--heading); font-size: 15px; color: var(--accent-light); margin-bottom: 6px; }
+        .section-title { font-family: var(--heading); font-size: 42px; font-weight: 600; color: var(--text); margin-bottom: 8px; }
+        .section-subtitle { font-size: 16px; color: var(--text-muted); }
+        .section-line { width: 40px; height: 1px; background: var(--accent-light); margin-top: 16px; }
+
+        /* SLIDE 2 */
+        .slide-bg { background: var(--bg); }
+        .bg-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+        .bg-card { background: var(--surface); border: 1px solid var(--border-light); padding: 28px; transition: all .3s; border-radius: 2px; }
+        .bg-card:hover { border-color: var(--accent-light); transform: translateY(-2px); box-shadow: 0 8px 24px rgba(0,0,0,0.06); }
+        .bg-card-icon { width: 40px; height: 40px; display: flex; align-items: center; justify-content: center; background: rgba(139,115,74,0.06); border: 1px solid rgba(139,115,74,0.12); margin-bottom: 16px; font-size: 18px; }
+        .bg-card-title { font-family: var(--heading); font-size: 19px; font-weight: 600; color: var(--text); margin-bottom: 8px; }
+        .bg-card-desc { font-size: 14px; color: var(--text-secondary); line-height: 1.7; }
+        .bg-card-meta { margin-top: 14px; padding-top: 10px; border-top: 1px solid var(--border-light); font-size: 12px; color: var(--text-muted); letter-spacing: 1px; text-transform: uppercase; }
+        .logo-row { display: flex; gap: 16px; flex-wrap: wrap; margin-top: 28px; padding-top: 20px; border-top: 1px solid var(--border-light); }
+        .logo-badge { padding: 8px 18px; background: var(--surface); border: 1px solid var(--border); font-size: 12px; font-weight: 500; color: var(--text-muted); }
+
+        /* SLIDE 3 */
+        .slide-portfolio { background: var(--bg-alt); }
+        .portfolio-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+        .p-card { background: var(--surface); border: 1px solid var(--border-light); overflow: hidden; transition: all .3s; border-radius: 2px; }
+        .p-card:hover { transform: translateY(-4px); box-shadow: 0 16px 32px rgba(0,0,0,0.08); border-color: var(--accent-light); }
+        .p-img-wrap { width: 100%; height: 240px; overflow: hidden; position: relative; background: var(--bg-alt); }
+        .p-img { width: 100%; height: 100%; object-fit: cover; transition: transform .5s; }
+        .p-card:hover .p-img { transform: scale(1.05); }
+        .p-badge { position: absolute; top: 12px; left: 12px; padding: 6px 14px; font-size: 11px; font-weight: 600; letter-spacing: 1.5px; text-transform: uppercase; background: rgba(139,115,74,0.9); color: #fff; }
+        .p-info { padding: 22px; }
+        .p-location { font-size: 12px; font-weight: 600; letter-spacing: 2px; text-transform: uppercase; color: var(--accent); margin-bottom: 6px; }
+        .p-type { font-family: var(--heading); font-size: 20px; font-weight: 600; color: var(--text); margin-bottom: 10px; }
+        .p-details { display: flex; gap: 16px; margin-bottom: 16px; }
+        .p-detail { font-size: 13px; color: var(--text-muted); }
+        .p-detail span { font-weight: 600; color: var(--text); }
+        .p-strategy { padding-top: 12px; border-top: 1px solid var(--border-light); font-size: 12.5px; color: var(--text-muted); line-height: 1.5; }
+        .p-strategy strong { color: var(--accent); font-weight: 500; }
+
+        /* SLIDE 4 */
+        .slide-approach { background: var(--bg); }
+        .approach-layout { display: grid; grid-template-columns: 1fr 1fr; gap: 50px; align-items: start; }
+        .approach-desc { font-size: 16px; color: var(--text-secondary); line-height: 1.8; margin-bottom: 28px; }
+        .approach-steps { display: flex; flex-direction: column; gap: 20px; }
+        .approach-step { display: flex; gap: 20px; align-items: flex-start; }
+        .step-num { width: 36px; height: 36px; min-width: 36px; display: flex; align-items: center; justify-content: center; background: rgba(139,115,74,0.06); border: 1px solid rgba(139,115,74,0.15); font-family: var(--heading); font-size: 14px; font-weight: 600; color: var(--accent); }
+        .step-content h4 { font-size: 15px; font-weight: 600; color: var(--text); margin-bottom: 4px; }
+        .step-content p { font-size: 13px; color: var(--text-muted); line-height: 1.6; }
+        .metrics-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+        .metric-card { background: var(--surface); border: 1px solid var(--border-light); padding: 28px 24px; text-align: center; transition: all .3s; }
+        .metric-card:hover { border-color: var(--accent-light); }
+        .metric-value { font-family: var(--heading); font-size: 34px; font-weight: 600; color: var(--accent); margin-bottom: 6px; }
+        .metric-label { font-size: 12px; font-weight: 500; letter-spacing: 1px; text-transform: uppercase; color: var(--text-muted); line-height: 1.4; }
+
+        /* SLIDE 5 */
+        .slide-contact { background: var(--bg-alt); }
+        .contact-layout { text-align: center; max-width: 700px; margin: 0 auto; }
+        .contact-title { font-family: var(--heading); font-size: 48px; font-weight: 600; color: var(--text); margin-bottom: 16px; }
+        .contact-subtitle { font-size: 18px; color: var(--text-secondary); font-weight: 300; line-height: 1.7; margin-bottom: 44px; }
+        .contact-cards { display: flex; gap: 24px; justify-content: center; margin-bottom: 48px; }
+        .contact-card { background: var(--surface); border: 1px solid var(--border-light); padding: 28px 36px; min-width: 200px; transition: all .3s; }
+        .contact-card:hover { border-color: var(--accent-light); }
+        .contact-card-label { font-size: 10px; font-weight: 600; letter-spacing: 2px; text-transform: uppercase; color: var(--text-muted); margin-bottom: 8px; }
+        .contact-card-value { font-size: 16px; font-weight: 500; color: var(--text); }
+        .contact-card-value a { color: var(--accent); text-decoration: none; }
+        .contact-card-value a:hover { text-decoration: underline; }
+        .contact-footer { padding-top: 40px; border-top: 1px solid var(--border); }
+        .contact-footer-text { font-size: 13px; color: var(--text-muted); }
+
+        @media (max-width: 768px) {
+            .slide { padding: 40px 24px; }
+            .cover-layout, .approach-layout { grid-template-columns: 1fr; gap: 40px; }
+            .bg-grid, .portfolio-grid { grid-template-columns: 1fr; }
+            .cover-name { font-size: 36px; }
+            .nav-dots { display: none; }
+        }
+        @media print { .slide { page-break-after: always; } .nav-dots { display: none; } }
+    </style>
+</head>
+<body>
+
+<nav class="nav-dots">
+    <button class="nav-dot active" onclick="scrollToSlide(0)"></button>
+    <button class="nav-dot" onclick="scrollToSlide(1)"></button>
+    <button class="nav-dot" onclick="scrollToSlide(2)"></button>
+    <button class="nav-dot" onclick="scrollToSlide(3)"></button>
+    <button class="nav-dot" onclick="scrollToSlide(4)"></button>
+</nav>
+
+<!-- SLIDE 1: COVER -->
+<section class="slide slide-cover" id="slide-0">
+    <div class="slide-inner">
+        <div class="cover-layout">
+            <div class="cover-photo-wrapper">
+                <div class="cover-photo-frame">
+                    <img src="images/profile_cropped.jpg" alt="Saurabh Kurjekar" class="cover-photo">
+                </div>
+            </div>
+            <div class="cover-text">
+                <div class="label">Real Estate Investor</div>
+                <h1 class="cover-name">Saurabh<br>Kurjekar</h1>
+                <div class="divider"></div>
+                <p class="cover-tagline">
+                    Real estate investor building a multi-state, international portfolio of high-yield rental properties — powered by data science and machine learning to consistently outperform traditional investors.
+                </p>
+                <div class="cover-stats">
+                    <div class="cover-stat">
+                        <div class="cover-stat-number">7+</div>
+                        <div class="cover-stat-label">Years in Real Estate</div>
+                    </div>
+                    <div class="cover-stat">
+                        <div class="cover-stat-number">4</div>
+                        <div class="cover-stat-label">Markets (US & India)</div>
+                    </div>
+                    <div class="cover-stat">
+                        <div class="cover-stat-number">13+</div>
+                        <div class="cover-stat-label">Years in AI / ML</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- SLIDE 2: BACKGROUND -->
+<section class="slide slide-bg" id="slide-1">
+    <div class="slide-inner">
+        <div class="section-header">
+            <div class="section-number">01</div>
+            <h2 class="section-title">Professional Background</h2>
+            <p class="section-subtitle">Where technology meets real estate strategy</p>
+            <div class="section-line"></div>
+        </div>
+        <div class="bg-grid">
+            <div class="bg-card">
+                <div class="bg-card-icon">🏠</div>
+                <div class="bg-card-title">Real Estate Investor — 7+ Years</div>
+                <div class="bg-card-desc">Over 7 years of active real estate investing across the U.S. and India. Building a diversified portfolio of multifamily long-term rentals and short-term vacation properties, using data science to identify deals that yield higher ROI than traditional investors achieve.</div>
+                <div class="bg-card-meta">Ohio · California · Florida · India</div>
+            </div>
+            <div class="bg-card">
+                <div class="bg-card-icon">📊</div>
+                <div class="bg-card-title">AI-Powered Acquisition Strategy</div>
+                <div class="bg-card-desc">Leveraging 13+ years of data science and machine learning expertise to build proprietary models that score markets, evaluate properties, and forecast returns — giving a quantitative edge in property selection and portfolio construction.</div>
+                <div class="bg-card-meta">Machine Learning · Predictive Models</div>
+            </div>
+            <div class="bg-card">
+                <div class="bg-card-icon">🏢</div>
+                <div class="bg-card-title">Senior Data Scientist, Amazon</div>
+                <div class="bg-card-desc">Currently a Senior Data Scientist at Amazon. Previously held data science roles at Uber and Postmates. Graduate of Purdue University with 13+ years of hands-on experience building predictive models and data-driven decision systems at scale.</div>
+                <div class="bg-card-meta">Amazon · Uber · Postmates · Purdue</div>
+            </div>
+            <div class="bg-card">
+                <div class="bg-card-icon">🌎</div>
+                <div class="bg-card-title">Global Reach, SF-Based</div>
+                <div class="bg-card-desc">Based in San Francisco at the intersection of technology and real estate. Investing domestically across multiple U.S. states and internationally in India, continuously bridging AI and real estate across borders.</div>
+                <div class="bg-card-meta">San Francisco · International</div>
+            </div>
+        </div>
+        <div class="logo-row">
+            <div class="logo-badge">Amazon</div>
+            <div class="logo-badge">Uber</div>
+            <div class="logo-badge">Postmates</div>
+            <div class="logo-badge">Purdue University</div>
+        </div>
+    </div>
+</section>
+
+<!-- SLIDE 3: PORTFOLIO -->
+<section class="slide slide-portfolio" id="slide-2">
+    <div class="slide-inner">
+        <div class="section-header">
+            <div class="section-number">02</div>
+            <h2 class="section-title">Investment Portfolio</h2>
+            <p class="section-subtitle">Data-driven acquisitions across the U.S. and India</p>
+            <div class="section-line"></div>
+        </div>
+        <div class="portfolio-grid">
+            <div class="p-card">
+                <div class="p-img-wrap">
+                    <img src="images/cleveland.jpg" alt="Cleveland Heights Property" class="p-img">
+                    <div class="p-badge">Long-Term Rental</div>
+                </div>
+                <div class="p-info">
+                    <div class="p-location">Cleveland Heights, Ohio</div>
+                    <div class="p-type">Multifamily Residence</div>
+                    <div class="p-details">
+                        <div class="p-detail"><span>7</span> Beds</div>
+                        <div class="p-detail"><span>3</span> Baths</div>
+                        <div class="p-detail"><span>2,782</span> sqft</div>
+                    </div>
+                    <div class="p-strategy"><strong>Strategy:</strong> Multifamily long-term rental — stable cash flow with multiple tenants generating consistent monthly income.</div>
+                </div>
+            </div>
+            <div class="p-card">
+                <div class="p-img-wrap">
+                    <img src="images/mariposa_main.jpg" alt="Mariposa Property" class="p-img">
+                    <div class="p-badge">Short-Term Rental</div>
+                </div>
+                <div class="p-info">
+                    <div class="p-location">Mariposa, California</div>
+                    <div class="p-type">Vacation Retreat</div>
+                    <div class="p-details">
+                        <div class="p-detail"><span>STR</span> Airbnb</div>
+                        <div class="p-detail"><span>Near</span> Yosemite</div>
+                    </div>
+                    <div class="p-strategy"><strong>Strategy:</strong> Short-term vacation rental near Yosemite National Park — high nightly rates driven by year-round tourism demand.</div>
+                </div>
+            </div>
+            <div class="p-card">
+                <div class="p-img-wrap">
+                    <img src="images/miami.jpg" alt="Miami Property" class="p-img">
+                    <div class="p-badge">Long-Term Rental</div>
+                </div>
+                <div class="p-info">
+                    <div class="p-location">Miami, Florida</div>
+                    <div class="p-type">Multifamily Residence</div>
+                    <div class="p-details">
+                        <div class="p-detail"><span>6</span> Beds</div>
+                        <div class="p-detail"><span>5</span> Baths</div>
+                        <div class="p-detail"><span>1,858</span> sqft</div>
+                    </div>
+                    <div class="p-strategy"><strong>Strategy:</strong> Multifamily long-term rental in a high-growth market — benefiting from Miami's strong rental demand and appreciation.</div>
+                </div>
+            </div>
+        </div>
+        <div style="margin-top: 32px; padding: 24px 32px; background: var(--surface); border: 1px solid var(--border-light); display: flex; align-items: center; gap: 24px;">
+            <div class="bg-card-icon" style="margin-bottom:0">🇮🇳</div>
+            <div>
+                <div style="font-family: var(--heading); font-size: 16px; font-weight: 600; color: var(--text); margin-bottom: 4px;">International Investments — India</div>
+                <div style="font-size: 13px; color: var(--text-secondary); line-height: 1.6;">Expanding the portfolio internationally with strategic real estate investments in India, capitalizing on rapid urbanization and strong appreciation potential in emerging markets.</div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- SLIDE 4: APPROACH -->
+<section class="slide slide-approach" id="slide-3">
+    <div class="slide-inner">
+        <div class="section-header">
+            <div class="section-number">03</div>
+            <h2 class="section-title">Data-Driven Investment Approach</h2>
+            <p class="section-subtitle">Leveraging AI & ML for superior returns</p>
+            <div class="section-line"></div>
+        </div>
+        <div class="approach-layout">
+            <div>
+                <p class="approach-desc">My investment thesis combines institutional-grade data science with entrepreneurial real estate execution. Using proprietary machine learning models, I identify properties that yield better risk-adjusted returns than traditional market analysis allows.</p>
+                <div class="approach-steps">
+                    <div class="approach-step">
+                        <div class="step-num">1</div>
+                        <div class="step-content"><h4>Market Identification</h4><p>ML models analyze macro-economic indicators, population growth, job market data, and rental yield trends to identify optimal markets.</p></div>
+                    </div>
+                    <div class="approach-step">
+                        <div class="step-num">2</div>
+                        <div class="step-content"><h4>Property Scoring</h4><p>Proprietary scoring algorithms evaluate properties on ROI potential, cap rate, cash-on-cash return, and appreciation forecasts.</p></div>
+                    </div>
+                    <div class="approach-step">
+                        <div class="step-num">3</div>
+                        <div class="step-content"><h4>Risk Assessment</h4><p>Predictive models assess downside scenarios, vacancy risk, and maintenance costs to ensure resilient portfolio construction.</p></div>
+                    </div>
+                    <div class="approach-step">
+                        <div class="step-num">4</div>
+                        <div class="step-content"><h4>Portfolio Optimization</h4><p>Diversification across geographies, property types, and rental strategies — balancing cash flow with long-term appreciation.</p></div>
+                    </div>
+                </div>
+            </div>
+            <div class="metrics-grid">
+                <div class="metric-card"><div class="metric-value">4</div><div class="metric-label">Markets<br>US & India</div></div>
+                <div class="metric-card"><div class="metric-value">2</div><div class="metric-label">Rental<br>Strategies</div></div>
+                <div class="metric-card"><div class="metric-value">ML</div><div class="metric-label">Powered<br>Acquisitions</div></div>
+                <div class="metric-card"><div class="metric-value">13+</div><div class="metric-label">Years AI/ML<br>Expertise</div></div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- SLIDE 5: CONTACT -->
+<section class="slide slide-contact" id="slide-4">
+    <div class="slide-inner">
+        <div class="contact-layout">
+            <div class="label" style="margin-bottom: 16px;">Get in Touch</div>
+            <h2 class="contact-title">Let's Connect</h2>
+            <p class="contact-subtitle">Interested in discussing real estate investment opportunities, data-driven strategies, or potential partnerships? I'd love to hear from you.</p>
+            <div class="contact-cards">
+                <div class="contact-card">
+                    <div class="contact-card-label">Location</div>
+                    <div class="contact-card-value">San Francisco, CA</div>
+                </div>
+                <div class="contact-card">
+                    <div class="contact-card-label">LinkedIn</div>
+                    <div class="contact-card-value"><a href="https://www.linkedin.com/in/saurabh-kurjekar/" target="_blank">/in/saurabh-kurjekar</a></div>
+                </div>
+            </div>
+            <div class="contact-footer">
+                <p class="contact-footer-text">Saurabh Kurjekar · Senior Data Scientist · Real Estate Investor · San Francisco</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<script>
+    const dots = document.querySelectorAll('.nav-dot');
+    const slides = document.querySelectorAll('.slide');
+    function scrollToSlide(i) { slides[i].scrollIntoView({ behavior: 'smooth' }); }
+    const obs = new IntersectionObserver(entries => {
+        entries.forEach(e => { if (e.isIntersecting) { const i = Array.from(slides).indexOf(e.target); dots.forEach(d => d.classList.remove('active')); dots[i].classList.add('active'); }});
+    }, { threshold: 0.5 });
+    slides.forEach(s => obs.observe(s));
+</script>
+</body>
+</html>
